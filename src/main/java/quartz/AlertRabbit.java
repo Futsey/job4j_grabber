@@ -17,15 +17,6 @@ public class AlertRabbit {
         try {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
-            JobDetail job = newJob(Rabbit.class).build();
-            SimpleScheduleBuilder times = simpleSchedule()
-                    .withIntervalInSeconds(10)
-                    .repeatForever();
-            Trigger trigger = newTrigger()
-                    .startNow()
-                    .withSchedule(times)
-                    .build();
-            scheduler.scheduleJob(job, trigger);
             JobDetail rabbitJob = newJob(Rabbit.class).build();
             SimpleScheduleBuilder rabbitTime = simpleSchedule()
                     .withIntervalInSeconds(getInterval("rabbit.properties"))
