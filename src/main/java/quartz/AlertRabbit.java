@@ -32,7 +32,7 @@ public class AlertRabbit {
     }
 
     public static Integer getInterval(String path) {
-        String interval = "-1";
+        String interval = "-1000";
         try (InputStream in = AlertRabbit.class.getClassLoader().getResourceAsStream(path)) {
             Properties config = new Properties();
             config.load(in);
