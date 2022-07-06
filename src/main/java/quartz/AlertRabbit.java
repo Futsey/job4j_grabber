@@ -20,7 +20,7 @@ public class AlertRabbit {
             JobDetail rabbitJob = newJob(Rabbit.class).build();
             SimpleScheduleBuilder rabbitTime = simpleSchedule()
                     .withIntervalInSeconds(getInterval("rabbit.properties"))
-                    .withRepeatCount(2);
+                    .repeatForever();
             Trigger rabbitTrigger = newTrigger()
                     .startNow()
                     .withSchedule(rabbitTime)
