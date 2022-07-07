@@ -26,7 +26,7 @@ public class AlertRabbit {
         try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
         } catch (SQLException e) {
-            throw new RuntimeException("TableEditor: initStatement(): Table is missing: " + e);
+            throw new RuntimeException("AlertRabbit: initStatement(): Table is missing: " + e);
         }
     }
 
