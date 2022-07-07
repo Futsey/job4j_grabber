@@ -32,7 +32,7 @@ public class AlertRabbit {
 
     public void createTable(String tableName, Connection connection) {
         String sql = String.format(
-                "Create table if not exists %s(%s);",
+                "Create table if not exists %s(%s, %s);",
                 tableName,
                 "id serial primary key",
                 "created_date timestamp");
@@ -90,7 +90,7 @@ public class AlertRabbit {
             System.out.println("Rabbit runs here ...");
             Connection connection = (Connection) context.getJobDetail().getJobDataMap().get("connection");
             try (PreparedStatement ps = ((Connection) context.getJobDetail().getJobDataMap()
-                    .get("connect")).prepareStatement(
+                    .get("connection")).prepareStatement(
                     "insert into rabbit (created_date) values (?);"
             )) {
                 ps.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
