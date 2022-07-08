@@ -19,6 +19,7 @@ public class HabrCareerParse implements DateTimeParser {
     private static final String PAGE_NUMBER = "?page=";
 
     public static void main(String[] args) throws IOException {
+        HabrCareerParse myCreer = new HabrCareerParse();
         int page = 1;
         do {
             Connection connection = Jsoup.connect(PAGE_LINK + PAGE_NUMBER + page);
@@ -33,10 +34,27 @@ public class HabrCareerParse implements DateTimeParser {
                 String link = String.format("%s%s", SOURCE_LINK,
                         linkElement.attr("href"),
                         linkDate.attr("time"));
-                System.out.printf("%s %s %s%n", vacancyName, link, linkDate);
+                System.out.printf("%s" + " | " +  "%s" + " | " +  "%s" + System.lineSeparator() +  "%s%n%n",
+                        vacancyName,
+                        link,
+                        linkDate,
+                        myCreer.retrieveDescription(link));
             });
             page++;
-        } while (page != 6);
+        } while (page != 2);
+
+    }
+
+    private String retrieveDescription(String link) {
+        try {
+            Connection connection = Jsoup.connect(link);
+            Document document = connection.get();
+            Element elem = document.select(".collapsible-description__content").first();
+            link = elem.text();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return link;
     }
 
     @Override
