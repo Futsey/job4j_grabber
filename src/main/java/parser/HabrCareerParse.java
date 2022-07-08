@@ -6,7 +6,6 @@ import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import utils.HabrCareerDateTimeParser;
 
 import java.io.IOException;
 
