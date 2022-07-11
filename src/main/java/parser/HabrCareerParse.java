@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class HabrCareerParse implements DateTimeParser {
+public class HabrCareerParse {
 
     private static final String SOURCE_LINK = "https://career.habr.com";
     private static final String PAGE_LINK = String.format("%s/vacancies/java_developer", SOURCE_LINK);
@@ -56,10 +56,5 @@ public class HabrCareerParse implements DateTimeParser {
             e.printStackTrace();
         }
         return link;
-    }
-
-    @Override
-    public LocalDateTime parse(String strToParse) {
-        return LocalDateTime.parse(strToParse, DateTimeFormatter.ISO_DATE_TIME);
     }
 }
