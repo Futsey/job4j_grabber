@@ -31,13 +31,14 @@ public class HabrCareerParse implements DateTimeParser {
                 Element titleDate = row.select(".vacancy-card__date").first();
                 Element linkDate = titleDate.child(0);
                 String vacancyName = linkElement.text();
+                String date = linkDate.attr("datetime");
                 String link = String.format("%s%s", SOURCE_LINK,
                         linkElement.attr("href"),
                         linkDate.attr("time"));
                 System.out.printf("%s" + " | " +  "%s" + " | " +  "%s" + System.lineSeparator() +  "%s%n%n",
                         vacancyName,
                         link,
-                        linkDate,
+                        date,
                         myCreer.retrieveDescription(link));
             });
             page++;
