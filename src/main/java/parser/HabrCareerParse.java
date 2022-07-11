@@ -20,9 +20,10 @@ public class HabrCareerParse {
 
     public static void main(String[] args) throws IOException {
         HabrCareerParse myCreer = new HabrCareerParse();
-        int page = 1;
-        do {
-            Connection connection = Jsoup.connect(PAGE_LINK + PAGE_NUMBER + page);
+        int firstPage = 0;
+        int lastPage = 5;
+        for (int i = firstPage; i < lastPage; i++) {
+            Connection connection = Jsoup.connect(PAGE_LINK + PAGE_NUMBER + firstPage);
             Document document = connection.get();
             Elements rows = document.select(".vacancy-card__inner");
             rows.forEach(row -> {
@@ -41,9 +42,7 @@ public class HabrCareerParse {
                         date,
                         myCreer.retrieveDescription(link));
             });
-            page++;
-        } while (page != 2);
-
+        }
     }
 
     private String retrieveDescription(String link) {
