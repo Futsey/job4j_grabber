@@ -18,7 +18,7 @@ public class HabrCareerParse implements Parse {
     private static final String SOURCE_LINK = "https://career.habr.com";
     private static final String PAGE_LINK = String.format("%s/vacancies/java_developer", SOURCE_LINK);
     private static final String PAGE_NUMBER = "?page=";
-    private static final int PAGES_TO_PARSE = 0;
+    private static final int PAGES_TO_PARSE = 5;
     private static final Logger LOG = LoggerFactory.getLogger(HabrCareerParse.class.getName());
 
     public static void main(String[] args) {
