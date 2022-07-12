@@ -6,24 +6,20 @@ import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import utils.DateTimeParser;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class HabrCareerParse {
 
     private static final String SOURCE_LINK = "https://career.habr.com";
     private static final String PAGE_LINK = String.format("%s/vacancies/java_developer", SOURCE_LINK);
     private static final String PAGE_NUMBER = "?page=";
+    private static final int PAGES_TO_PARSE = 5;
 
     public static void main(String[] args) throws IOException {
         HabrCareerParse myCreer = new HabrCareerParse();
-        int firstPage = 0;
-        int lastPage = 5;
-        for (int i = firstPage; i < lastPage; i++) {
-            Connection connection = Jsoup.connect(PAGE_LINK + PAGE_NUMBER + firstPage);
+        for (int i = 0; i <= PAGES_TO_PARSE; i++) {
+            Connection connection = Jsoup.connect(PAGE_LINK + PAGE_NUMBER + i);
             Document document = connection.get();
             Elements rows = document.select(".vacancy-card__inner");
             rows.forEach(row -> {
