@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface Parse {
 
-    List<Post> list(Post post);
+    List<Post> list(String link);
 }
