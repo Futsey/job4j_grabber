@@ -43,8 +43,7 @@ public class PsqlStore implements Store, AutoCloseable {
     }
 
     public static void main(String[] args) {
-        try {
-            PsqlStore psqlStore = new PsqlStore(getConfig());
+        try (PsqlStore psqlStore = new PsqlStore(getConfig())) {
             psqlStore.createTable(psqlStore.getCnn());
             HabrCareerParse habrCareerParse = new HabrCareerParse();
             String link = String.format("%s/vacancies/java_developer", "https://career.habr.com");
@@ -52,8 +51,8 @@ public class PsqlStore implements Store, AutoCloseable {
                 psqlStore.save(vacancy);
                 System.out.println(vacancy);
             }
-        } catch (ClassNotFoundException cnfe) {
-            LOG.error("ClassNotFoundException in: " + cnfe);
+        } catch (Exception e) {
+            LOG.error("Exception in: " + e);
         }
     }
 
@@ -105,8 +104,8 @@ public class PsqlStore implements Store, AutoCloseable {
             while (resultSet.next()) {
                 postList.add(getPost(resultSet));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqle) {
+            LOG.error("SQLException in: " + sqle);
         }
         return postList;
     }
@@ -118,11 +117,11 @@ public class PsqlStore implements Store, AutoCloseable {
         try (PreparedStatement prepState = cnn.prepareStatement(sql)) {
             prepState.setInt(1, id);
             ResultSet resultSet = prepState.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 post = getPost(resultSet);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqle) {
+            LOG.error("SQLException in: " + sqle);
         }
         return post;
     }
