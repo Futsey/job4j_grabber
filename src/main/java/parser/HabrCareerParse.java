@@ -16,12 +16,11 @@ import java.util.List;
 public class HabrCareerParse implements Parse {
 
     private static final String SOURCE_LINK = "https://career.habr.com";
-    private static final String PAGE_LINK = String.format("%s/vacancies/java_developer", SOURCE_LINK);
-    private static final String PAGE_NUMBER = "?page=";
+    private static final String PAGE_LINK = String.format("%s/vacancies/java_developer?page=", SOURCE_LINK);
     private static final int PAGES_TO_PARSE = 5;
     private static final Logger LOG = LoggerFactory.getLogger(HabrCareerParse.class.getName());
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         HabrCareerParse habrCareerParse = new HabrCareerParse();
         for (Post vacancy : habrCareerParse.list(PAGE_LINK)) {
             System.out.println(vacancy);
@@ -62,17 +61,17 @@ public class HabrCareerParse implements Parse {
     }
 
     @Override
-    public List<Post> list(String link) {
+    public List<Post> list(String link) throws IOException {
         List<Post> jobList = new ArrayList<>();
         try {
-            for (int i = 0; i <= PAGES_TO_PARSE; i++) {
-                Connection connection = Jsoup.connect(link + PAGE_NUMBER + i);
+            for (int i = 1; i <= PAGES_TO_PARSE; i++) {
+                Connection connection = Jsoup.connect(link + i);
                 Document document = connection.get();
                 Elements rows = document.select(".vacancy-card__inner");
                 rows.forEach(row -> jobList.add(postParser(row)));
             }
-        } catch (IllegalArgumentException | IOException iae) {
-            LOG.error("IllegalArgumentException or IOException. See the logfile", iae);
+        } catch (IllegalArgumentException iae) {
+            LOG.error("IllegalArgumentException. See the logfile", iae);
             throw new IllegalArgumentException();
         }
         return jobList;
