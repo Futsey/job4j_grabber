@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.DateTimeParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,12 +20,10 @@ public class HabrCareerParse implements Parse {
     private static final String PAGE_LINK = String.format("%s/vacancies/java_developer?page=", SOURCE_LINK);
     private static final int PAGES_TO_PARSE = 5;
     private static final Logger LOG = LoggerFactory.getLogger(HabrCareerParse.class.getName());
+    private final DateTimeParser dateTimeParser;
 
-    public static void main(String[] args) throws IOException {
-        HabrCareerParse habrCareerParse = new HabrCareerParse();
-        for (Post vacancy : habrCareerParse.list(PAGE_LINK)) {
-            System.out.println(vacancy);
-        }
+    public HabrCareerParse(DateTimeParser dateTimeParser) {
+        this.dateTimeParser = dateTimeParser;
     }
 
     private String retrieveDescription(String link) {
@@ -33,15 +32,14 @@ public class HabrCareerParse implements Parse {
             Document document = connection.get();
             Element elem = document.select(".collapsible-description__content").first();
             link = elem.text();
-        } catch (Exception e) {
-            LOG.error("Exception. See the logfile", e);
-            e.printStackTrace();
+        } catch (IOException ioe) {
+            LOG.error("Exception. See the logfile", ioe);
+            throw new IllegalArgumentException();
         }
         return link;
     }
 
     private Post postParser(Element el) {
-        HabrCareerParse myCareer = new HabrCareerParse();
         HabrCareerDateTimeParser timeParser = new HabrCareerDateTimeParser();
         Element titleElement = el.select(".vacancy-card__title").first();
         Element linkElement = titleElement.child(0);
@@ -55,13 +53,13 @@ public class HabrCareerParse implements Parse {
         Post post = new Post(
                 vacancyName,
                 link,
-                myCareer.retrieveDescription(link),
+                retrieveDescription(link),
                 timeParser.parse(date));
         return post;
     }
 
     @Override
-    public List<Post> list(String link) throws IOException {
+    public List<Post> list(String link) {
         List<Post> jobList = new ArrayList<>();
         try {
             for (int i = 1; i <= PAGES_TO_PARSE; i++) {
@@ -70,8 +68,8 @@ public class HabrCareerParse implements Parse {
                 Elements rows = document.select(".vacancy-card__inner");
                 rows.forEach(row -> jobList.add(postParser(row)));
             }
-        } catch (IllegalArgumentException iae) {
-            LOG.error("IllegalArgumentException. See the logfile", iae);
+        } catch (IOException ioe) {
+            LOG.error("IOException. See the logfile", ioe);
             throw new IllegalArgumentException();
         }
         return jobList;
