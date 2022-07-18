@@ -2,7 +2,6 @@ package parser;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-import utils.DateTimeParser;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import static org.quartz.TriggerBuilder.newTrigger;
 
 public class Grabber implements Grab {
 
+    private static final String LINK = "https://career.habr.com/vacancies/java_developer?page=";
     private final Properties cfg = new Properties();
 
     public Store store() {
@@ -42,7 +42,7 @@ public class Grabber implements Grab {
                 .usingJobData(data)
                 .build();
         SimpleScheduleBuilder times = simpleSchedule()
-                .withIntervalInSeconds(Integer.parseInt(cfg.getProperty("time")))
+                .withIntervalInMinutes(Integer.parseInt(cfg.getProperty("interval")))
                 .repeatForever();
         Trigger trigger = newTrigger()
                 .startNow()
@@ -59,9 +59,8 @@ public class Grabber implements Grab {
             Store store = (Store) map.get("store");
             Parse parse = (Parse) map.get("parse");
             List<Post> jobList = new ArrayList<>();
-            String link = "https://career.habr.com/vacancies/java_developer?page=";
             try {
-                jobList = parse.list(link);
+                jobList = parse.list(LINK);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
