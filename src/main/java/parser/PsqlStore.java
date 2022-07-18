@@ -77,19 +77,19 @@ public class PsqlStore implements Store, AutoCloseable {
     public Post getPost(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(1);
         String name = resultSet.getString(2);
-        String text = resultSet.getString(3);
-        String link = resultSet.getString(4);
+        String link = resultSet.getString(3);
+        String text = resultSet.getString(4);
         LocalDateTime created = resultSet.getTimestamp(5).toLocalDateTime();
         return new Post(id, name, text, link, created);
     }
 
     @Override
     public void save(Post post) {
-        String sql = "insert into post(name, text, link, created) values (?, ?, ?, ?);";
+        String sql = "insert into post(name, link, text, created) values (?, ?, ?, ?);";
         try (PreparedStatement ps = cnn.prepareStatement(sql)) {
             ps.setString(1, post.getTitle());
-            ps.setString(2, post.getDescription());
-            ps.setString(3, post.getLink());
+            ps.setString(2, post.getLink());
+            ps.setString(3, post.getDescription());
             ps.setTimestamp(4, Timestamp.valueOf(post.getCreated()));
             ps.execute();
         } catch (SQLException sqle) {
