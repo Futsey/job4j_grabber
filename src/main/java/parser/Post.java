@@ -85,12 +85,15 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post{"
-                + "id=" + id
-                + ", title='" + title + '\''
-                + ", link='" + link + '\''
-                + ", description='" + description + '\''
-                + ", created=" + created
-                + '}';
+        return "Post "
+                + "¹(ID) = " + id
+                + System.lineSeparator()
+                + "TITLE = '" + title + '\''
+                + System.lineSeparator()
+                + "LINK = '" + link + '\''
+                + System.lineSeparator()
+                + "DESCRIPTION = '" + description + '\''
+                + System.lineSeparator()
+                + "CREATE DATE = " + created;
     }
 }
