@@ -40,7 +40,6 @@ public class HabrCareerParse implements Parse {
     }
 
     private Post postParser(Element el) {
-        HabrCareerDateTimeParser timeParser = new HabrCareerDateTimeParser();
         Element titleElement = el.select(".vacancy-card__title").first();
         Element linkElement = titleElement.child(0);
         Element titleDate = el.select(".vacancy-card__date").first();
@@ -54,7 +53,7 @@ public class HabrCareerParse implements Parse {
                 vacancyName,
                 link,
                 retrieveDescription(link),
-                timeParser.parse(date));
+                dateTimeParser.parse(date));
         return post;
     }
 
