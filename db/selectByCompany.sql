@@ -72,4 +72,20 @@ LIMIT 3;
 SELECT p.name, c.name
 FROM company c
 JOIN person p on c.id = p.company_id
-WHERE company_id = 5
+WHERE company_id = 5;
+
+INSERT INTO person (id, name, company_id)
+    VALUES
+    (nextval('personSerial'), 'Greg', 3),
+    (nextval('personSerial'), 'Juda', 3);
+
+SELECT c.name, COUNT(p.company_id) AS top_count
+FROM person p
+JOIN company c ON p.company_id = c.id
+GROUP BY c.name
+HAVING COUNT(p.company_id) = (
+	SELECT MAX(cnt)
+	FROM (
+		SELECT COUNT(*) AS cnt
+		FROM person p
+		GROUP BY p.company_id) AS top_company);
