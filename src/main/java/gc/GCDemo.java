@@ -25,26 +25,5 @@ public class GCDemo {
         System.gc();
         info();
         System.out.println("PERSON---------" + System.lineSeparator());
-        System.out.println(System.lineSeparator() + "USER---------");
-        info();
-        User user = new User(1, Department.ARCHITECTURE);
-        System.out.println("User object in memory: " + user.userMemCalc() + " byte");
-        for (int i = 0; i < 100; i++) {
-            if (i <= 25) {
-                new User(i, Department.ARCHITECTURE);
-            }
-            if (i <= 50 && i > 25) {
-                new User(i, Department.COMMUNAL);
-            }
-            if (i <= 75 && i > 50) {
-                new User(i, Department.PUBLICRELATIONS);
-            }
-            if (i > 75) {
-                new User(i, Department.SOCIETY);
-            }
-        }
-        System.gc();
-        info();
-        System.out.println("USER---------");
     }
 }

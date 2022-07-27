@@ -9,10 +9,17 @@ public class User {
      * 32 = 8 + 4 + 4 + 16
      */
     private int id;
+    private long bankAcc;
     private Department department;
 
     public User(int id, Department department) {
         this.id = id;
+        this.department = department;
+    }
+
+    public User(int id, long bankAcc, Department department) {
+        this.id = id;
+        this.bankAcc = bankAcc;
         this.department = department;
     }
 

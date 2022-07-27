@@ -1,9 +1,10 @@
 package gc;
 
-public enum Department {
+public class Department {
 
-    ARCHITECTURE,
-    SOCIETY,
-    PUBLICRELATIONS,
-    COMMUNAL
+    private String department;
+
+    public Department(String department) {
+        this.department = department;
+    }
 }
