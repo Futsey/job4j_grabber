@@ -24,12 +24,4 @@ public class RandomArray implements Data {
     public int[] getClone() {
         return array.clone();
     }
-
-//    @Override
-//    public String toString() {
-//        return "RandomArray{"
-//                + "array=" + Arrays.toString(array)
-//                + ", random=" + random
-//                + '}';
-//    }
 }
