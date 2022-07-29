@@ -40,7 +40,7 @@ public class GCDemo {
             if (i > 1000 && i < 2000) {
                 System.out.println(GraphLayout.parseInstance(new User(i + 1, (i + 16) * i)).toFootprint());
                 System.out.println("В данном случае GC  начинает работать, так как райское место Eden переполнено"
-                + "а в выжившие (Survivor) объекты без ссылок направлять некошерно, "
+                        + "а в выжившие (Survivor) объекты без ссылок направлять некошерно, "
                         + "а потому все объекты из Eden приговорены к MinorGC");
             }
             if (i >= 2000) {
