@@ -17,10 +17,9 @@ public class User {
         this.department = department;
     }
 
-    public User(int id, long bankAcc, Department department) {
+    public User(int id, long bankAcc) {
         this.id = id;
         this.bankAcc = bankAcc;
-        this.department = department;
     }
 
     public int userMemCalc() {
