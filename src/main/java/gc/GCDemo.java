@@ -30,6 +30,7 @@ public class GCDemo {
 
         System.out.println("USER---------");
         info();
+
         int count = 0;
         for (int i = 0; i < 3000; i++) {
             if (i < 250) {
@@ -54,7 +55,5 @@ public class GCDemo {
         }
         info();
         System.out.println("USER---------");
-        /** Слетелеа кодировка после обновления IDE
-         */
     }
 }
