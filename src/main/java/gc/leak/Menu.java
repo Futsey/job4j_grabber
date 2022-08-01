@@ -10,12 +10,12 @@ public class Menu {
     public static int showAllPosts = 3;
     public static int deletePost = 4;
 
-    public static String SELECT = "Выберите меню";
-    public static String COUNT = "Выберите количество создаваемых постов";
-    public static String TEXT_OF_POST = "Введите текст";
-    public static String EXIT = "Конец работы";
+    public static final String SELECT = "Выберите меню";
+    public static final String COUNT = "Выберите количество создаваемых постов";
+    public static final String TEXT_OF_POST = "Введите текст";
+    public static final String EXIT = "Конец работы";
 
-    public static String MENU = """
+    public static final String MENU = """
                 Введите 1 для создание поста.
                 Введите 2, чтобы создать определенное количество постов.
                 Введите 3, чтобы показать все посты.
