@@ -46,11 +46,6 @@ public class Post {
     }
 
     @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-    }
-
-    @Override
     public String toString() {
         return "Post{"
                 + "id=" + id

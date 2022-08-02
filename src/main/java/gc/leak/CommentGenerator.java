@@ -7,12 +7,12 @@ import java.util.Random;
 
 public class CommentGenerator implements Generate {
 
-    private static List<Comment> comments = new ArrayList<>();
-    private static List<String> phrases;
+    private List<Comment> comments = new ArrayList<>();
+    private List<String> phrases;
 
-    public String pathPhrases = "src/main/java/gc/leak/files/phrases.txt";
-    public String separator = System.lineSeparator();
-    public int count = 50;
+    public static final String PATH_PHRASES = "src/main/java/gc/leak/files/phrases.txt";
+    public static final String SEPARATOR = System.lineSeparator();
+    public static final int COUNT = 50;
     private UserGenerator userGenerator;
     private Random random;
 
@@ -24,13 +24,13 @@ public class CommentGenerator implements Generate {
 
     private void read() {
         try {
-            phrases = read(pathPhrases);
+            phrases = read(PATH_PHRASES);
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    public static List<Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
@@ -40,10 +40,10 @@ public class CommentGenerator implements Generate {
         List<Integer> ints = new ArrayList<>();
         random.ints(0, phrases.size())
                 .distinct().limit(3).forEach(ints::add);
-        for (int i = 0; i < count; i++) {
-            String comment = phrases.get(ints.get(0)) + separator
-                    + phrases.get(ints.get(1)) + separator
-                    + phrases.get(ints.get(2));
+        for (int i = 0; i < COUNT; i++) {
+            String comment = phrases.get(ints.get(0)).concat(SEPARATOR)
+                    .concat(phrases.get(ints.get(1))).concat(SEPARATOR)
+                    .concat(phrases.get(ints.get(2)));
             comments.add(new Comment(comment,
                     userGenerator.randomUser()));
         }
