@@ -6,6 +6,7 @@ import java.util.Random;
 public class RandomArray implements Data {
 
     public int[] array;
+
     private Random random;
 
     public RandomArray(Random random) {

@@ -7,12 +7,12 @@ import java.util.Random;
 
 public class CommentGenerator implements Generate {
 
-    private List<Comment> comments = new ArrayList<>();
-    private List<String> phrases;
-
     public static final String PATH_PHRASES = "src/main/java/gc/leak/files/phrases.txt";
     public static final String SEPARATOR = System.lineSeparator();
     public static final int COUNT = 50;
+
+    private List<Comment> comments = new ArrayList<>();
+    private List<String> phrases;
     private UserGenerator userGenerator;
     private Random random;
 

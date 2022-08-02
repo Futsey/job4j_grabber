@@ -5,8 +5,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PostStore {
 
-    private Map<Integer, Post> posts = new HashMap<>();
     public AtomicInteger atomicInteger = new AtomicInteger(1);
+
+    private Map<Integer, Post> posts = new HashMap<>();
 
     public Post add(Post post) {
         int id = atomicInteger.getAndIncrement();

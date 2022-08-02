@@ -7,18 +7,16 @@ import java.util.Random;
 
 public class UserGenerator implements Generate {
 
-    private List<User> users = new ArrayList<>();
-
     public static final String PATH_NAMES = "src/main/java/gc/leak/files/names.txt";
     public static final String PATH_SURNAMES = "src/main/java/gc/leak/files/surnames.txt";
     public static final String PATH_PATRONS = "src/main/java/gc/leak/files/patr.txt";
     public static final String SEPARATOR = " ";
     public static final int NEW_USERS = 1000;
 
+    private List<User> users = new ArrayList<>();
     private List<String> names;
     private List<String> surnames;
     private List<String> patrons;
-
     private Random random;
 
     public UserGenerator(Random random) {
