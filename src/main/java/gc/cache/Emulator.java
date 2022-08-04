@@ -13,8 +13,7 @@ public class Emulator {
      */
     public static final String SEPARATOR = System.lineSeparator();
     private Scanner scanner = new Scanner(System.in);
-    private String dir;
-    private int button;
+
     private String menu = """
             Select item to be done:
             1. Show all directories and files
@@ -38,6 +37,7 @@ public class Emulator {
         final int WRITECACHE = 4;
         final int SELECTFILE = 5;
         final int EXIT = 6;
+        int button;
         System.out.println(menu);
         button = scanner.nextInt();
         switch (button) {
@@ -72,6 +72,7 @@ public class Emulator {
     }
 
     private String getDirectory() throws IOException {
+        String dir;
         System.out.println("Please select directory: ");
         dir = scanner.next();
         if (!Files.exists(Path.of(dir))) {
