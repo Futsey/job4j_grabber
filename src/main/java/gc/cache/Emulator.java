@@ -11,9 +11,19 @@ public class Emulator {
     /**Сделать два класса. Один собирает по относительному пути, второй по абсолютному пути.
      * Сделать их по интерфейсу (фабричный метод)
      */
-    private String defaultDirectory = "./src";
+    public static final String SEPARATOR = System.lineSeparator();
+    private Scanner scanner = new Scanner(System.in);
     private String dir;
     private int button;
+    private String menu = """
+            Select item to be done:
+            1. Show all directories and files
+            2. Select directory
+            3. Try to read from cache
+            4. Write to cache
+            5. Select file to read
+            6. Exit
+            """;
 
     public static void main(String[] args) throws IOException {
         Emulator emulator = new Emulator();
@@ -21,46 +31,39 @@ public class Emulator {
     }
 
     public void mainMenu() throws IOException {
-        DirFileCache dirFileCache = new DirFileCache(defaultDirectory);
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Select item to be done: "
-                + System.lineSeparator()
-                + "1. Show all directories and files"
-                + System.lineSeparator()
-                + "2. Select directory"
-                + System.lineSeparator()
-                + "3. Try to read from cache"
-                + System.lineSeparator()
-                + "4. Write to cache"
-                + System.lineSeparator()
-                + "5. Select file to read"
-                + System.lineSeparator()
-                + "6. Exit");
+        DirFileCache dirFileCache = new DirFileCache("./src");
+        final int SHOWALLDIR = 1;
+        final int SELECTDIR = 2;
+        final int READCACHE = 3;
+        final int WRITECACHE = 4;
+        final int SELECTFILE = 5;
+        final int EXIT = 6;
+        System.out.println(menu);
         button = scanner.nextInt();
         switch (button) {
-            case 1:
-                listFiles(Path.of(defaultDirectory));
-                System.out.println("Back to main menu" + System.lineSeparator());
+            case SHOWALLDIR:
+                listFiles(Path.of("./src"));
+                System.out.println("Back to main menu".concat(SEPARATOR));
                 mainMenu();
                 break;
-            case 2:
+            case SELECTDIR:
                 dirFileCache = new DirFileCache(getDirectory());
-                System.out.println("Back to main menu" + System.lineSeparator());
+                System.out.println("Back to main menu".concat(SEPARATOR));
                 mainMenu();
                 break;
-            case 3:
+            case READCACHE:
                 readFileFromCache(dirFileCache);
                 mainMenu();
                 break;
-            case 4:
+            case WRITECACHE:
                 addFileInCache(dirFileCache);
                 mainMenu();
                 break;
-            case 5:
+            case SELECTFILE:
                 readFile(dirFileCache);
                 mainMenu();
                 break;
-            case 6:
+            case EXIT:
                 exit();
                 break;
             default:
@@ -70,10 +73,9 @@ public class Emulator {
 
     private String getDirectory() throws IOException {
         System.out.println("Please select directory: ");
-        Scanner scanDir = new Scanner(System.in);
-        dir = scanDir.next();
+        dir = scanner.next();
         if (!Files.exists(Path.of(dir))) {
-            System.out.println("Selected directory doesn`t exist. Back to main menu" + System.lineSeparator());
+            System.out.println("Selected directory doesn`t exist. Back to main menu".concat(SEPARATOR));
             mainMenu();
         }
         Files.list(Path.of(dir))
@@ -83,22 +85,19 @@ public class Emulator {
 
     private void addFileInCache(DirFileCache dirFileCache) {
         System.out.println("Enter path of file to add in cache memory");
-        Scanner scanFile = new Scanner(System.in);
-        String file = scanFile.next();
+        String file = scanner.next();
         dirFileCache.put(file, dirFileCache.get(file));
     }
 
     private void readFileFromCache(DirFileCache dirFileCache) {
         System.out.println("Enter path of file to read from cache memory");
-        Scanner scanFile = new Scanner(System.in);
-        String file = scanFile.next();
-        System.out.println(dirFileCache.getCache(file));
+        String file = scanner.next();
+        System.out.println(dirFileCache.get(file));
     }
 
     private void readFile(DirFileCache dirFileCache) {
         System.out.println("Enter path of file to read");
-        Scanner scanFile = new Scanner(System.in);
-        String file = scanFile.next();
+        String file = scanner.next();
         System.out.println(dirFileCache.load(file));
     }
 

@@ -13,26 +13,11 @@ public abstract class AbstractCache<K, V> {
         cache.put(key, softRef);
     }
 
-    public boolean getCache(K key) {
-        boolean rsl = false;
-        if (cache.containsKey(key)) {
-            rsl = true;
-            System.out.println("Entry in cache found: " + cache.get(key));
-        } else {
-            System.out.println("Entry not found");
-        }
-        return rsl;
-    }
-
     public V get(K key) {
         V strongRef = cache.getOrDefault(key, new SoftReference<>(null)).get();
         if (strongRef == null) {
             strongRef = load(key);
             put(key, strongRef);
-            System.out.println("Values in cache added");
-        } else {
-            System.out.println("Values from cache: ");
-            cache.entrySet().forEach(System.out::println);
         }
             return strongRef;
     }
