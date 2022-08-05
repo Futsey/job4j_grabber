@@ -11,6 +11,11 @@ public class Emulator {
     /**Сделать два класса. Один собирает по относительному пути, второй по абсолютному пути.
      * Сделать их по интерфейсу (фабричный метод)
      */
+    static final int SHOWALLDIR = 1;
+    static final int SELECTDIR = 2;
+    static final int READCACHE = 3;
+    static final int WRITECACHE = 4;
+    static final int EXIT = 5;
     public static final String SEPARATOR = System.lineSeparator();
     private Scanner scanner = new Scanner(System.in);
 
@@ -20,8 +25,7 @@ public class Emulator {
             2. Select directory
             3. Try to read from cache
             4. Write to cache
-            5. Select file to read
-            6. Exit
+            5. Exit
             """;
 
     public static void main(String[] args) throws IOException {
@@ -31,12 +35,6 @@ public class Emulator {
 
     public void mainMenu() throws IOException {
         DirFileCache dirFileCache = new DirFileCache("./src");
-        final int SHOWALLDIR = 1;
-        final int SELECTDIR = 2;
-        final int READCACHE = 3;
-        final int WRITECACHE = 4;
-        final int SELECTFILE = 5;
-        final int EXIT = 6;
         int button;
         System.out.println(menu);
         button = scanner.nextInt();
@@ -57,10 +55,6 @@ public class Emulator {
                 break;
             case WRITECACHE:
                 addFileInCache(dirFileCache);
-                mainMenu();
-                break;
-            case SELECTFILE:
-                readFile(dirFileCache);
                 mainMenu();
                 break;
             case EXIT:
@@ -94,12 +88,6 @@ public class Emulator {
         System.out.println("Enter path of file to read from cache memory");
         String file = scanner.next();
         System.out.println(dirFileCache.get(file));
-    }
-
-    private void readFile(DirFileCache dirFileCache) {
-        System.out.println("Enter path of file to read");
-        String file = scanner.next();
-        System.out.println(dirFileCache.load(file));
     }
 
     private void listFiles(Path path) throws IOException {
